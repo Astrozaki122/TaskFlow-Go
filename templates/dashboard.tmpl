@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+<!-- Sidebar + Main Layout -->
+<div class="flex h-screen">
+
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-white border-r p-6 hidden md:block">
+
+        <h1 class="text-2xl font-bold mb-8">TaskFlow</h1>
+
+        <nav class="space-y-4 text-sm">
+            <a class="block text-blue-600 font-semibold" href="/dashboard">Dashboard</a>
+            <a class="block text-gray-600 hover:text-black" href="#">Projects</a>
+            <a class="block text-gray-600 hover:text-black" href="#">Settings</a>
+        </nav>
+
+        <div class="mt-10">
+            <a href="/logout"
+               class="text-red-500 text-sm hover:text-red-700">
+                Logout
+            </a>
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 p-8 overflow-y-auto">
+
+        <!-- HEADER -->
+        <div class="flex justify-between items-center mb-8">
+
+            <div>
+                <h2 class="text-3xl font-bold">My Tasks</h2>
+                <p class="text-gray-500 text-sm">Manage your daily work</p>
+            </div>
+
+        </div>
+
+        <!-- ADD TASK -->
+        <form method="POST" action="/tasks/create"
+              class="flex gap-3 mb-8">
+
+            <input
+                type="text"
+                name="title"
+                placeholder="What do you need to do?"
+                class="flex-1 p-4 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required
+            />
+
+            <button
+                class="bg-blue-600 text-white px-6 rounded-xl hover:bg-blue-700 transition">
+                Add Task
+            </button>
+
+        </form>
+
+        <!-- TASK GRID -->
+        <div class="grid gap-4">
+
+            {{range .}}
+            <div class="bg-white p-5 rounded-xl shadow-sm flex justify-between items-center hover:shadow-md transition">
+
+                <div class="flex items-center gap-3">
+
+                    <!-- checkbox UI (future completion feature) -->
+                    <input type="checkbox" class="w-5 h-5">
+
+                    <span class="text-gray-800">
+                        {{.Title}}
+                    </span>
+
+                </div>
+
+                <a href="/tasks/delete?id={{.ID}}"
+                   class="text-sm text-red-500 hover:text-red-700">
+                    Delete
+                </a>
+
+            </div>
+            {{end}}
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
